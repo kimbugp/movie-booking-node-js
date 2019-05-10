@@ -1,4 +1,5 @@
 const Boom = require("boom")
+const db = require("./index")
 const movies = [
     {
         "title": "The Shawshank Redemption",
@@ -26,7 +27,7 @@ const movies = [
         "id": "tt0060196"
     }];
 
-class Movie {
+class Movies {
     constructor(movie) {
         this.title = movie.title
         this.year = movie.year
@@ -49,7 +50,7 @@ class Movie {
         let movie = this.get(id)
         let update = this.body
         if (movie.id) {
-            Object.assign(movies[movies.indexOf(movie)],update)
+            Object.assign(movies[movies.indexOf(movie)], update)
             return this.get(id)
         }
     }
@@ -76,5 +77,47 @@ class Movie {
 
 }
 
+class Movie {
+    save() {
+        let movie = {
+            id: movies.length + 1,
+            title: this.title,
+            year: this.year,
+            rank: this.rank
+        }
+        movies.push(movie)
+        return movie
+    }
 
-module.exports = { movies, Movie };
+    update(id) {
+        let movie = this.get(id)
+        let update = this.body
+        if (movie.id) {
+            Object.assign(movies[movies.indexOf(movie)], update)
+            return this.get(id)
+        }
+    }
+
+    get(req,res) {
+        db.query("SELECT * FROM movies ORDER BY id ASC", (error, results) => {
+            if (error) {
+              throw error
+            }
+            res.status(200).json(results.rows)
+          })
+    }
+    delete(id) {
+        let movie = this.get(id)
+        if (movie.id) {
+            movies.splice(movies.indexOf(movie), 1)
+            return { message: "movie deleted " }
+        }
+        else {
+            return Boom.notFound().output.payload
+        }
+    }
+
+}
+
+
+module.exports = { movies, Movie, Movies };

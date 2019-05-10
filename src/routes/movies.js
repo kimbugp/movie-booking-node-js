@@ -1,6 +1,6 @@
 let movies = require("../models/movies");
 function getMovies(req, res) {
-    res.json(movies);
+    return new movies.Movie(req).get(res,res)
 }
 
 function addMovies(req, res) {
