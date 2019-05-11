@@ -2,7 +2,7 @@ const Pool = require("pg").Pool
 
 function connection(environment) {
     let database
-    if (environment === "testing") {
+    if (environment === "test") {
         database = process.env.TEST_DATABASE
     }
     else {
