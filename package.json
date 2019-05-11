@@ -4,9 +4,10 @@
   "description": "An app for cinema movie bookings",
   "main": "server.js",
   "scripts": {
-    "test": "mocha",
+    "test": "nyc mocha --exit",
     "eslint": "eslint --fix *.js",
-    "server": "nodemon --exec npm start"
+    "server": "nodemon --exec npm start",
+    "report": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
     "type": "git",
@@ -29,7 +30,9 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
+    "coveralls": "^3.0.3",
     "mocha": "^6.1.4",
-    "nodemon": "^1.19.0"
+    "nodemon": "^1.19.0",
+    "nyc": "^14.1.1"
   }
 }
