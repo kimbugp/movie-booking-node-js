@@ -78,15 +78,13 @@ class Movies {
 }
 
 class Movie {
-    save() {
-        let movie = {
-            id: movies.length + 1,
-            title: this.title,
-            year: this.year,
-            rank: this.rank
-        }
-        movies.push(movie)
-        return movie
+    save(req, res, movie) {
+        db.query("INSERT INTO movies(title,year) VALUES($1,$2) returning id , title, year", [movie.title, movie.year], (error, results) => {
+            if (error) {
+                throw error
+            }
+            res.status(200).json(results.rows)
+        })
     }
 
     update(id) {
@@ -98,13 +96,13 @@ class Movie {
         }
     }
 
-    get(req,res) {
+    queryAll(req, res) {
         db.query("SELECT * FROM movies ORDER BY id ASC", (error, results) => {
             if (error) {
-              throw error
+                throw error
             }
             res.status(200).json(results.rows)
-          })
+        })
     }
     delete(id) {
         let movie = this.get(id)
