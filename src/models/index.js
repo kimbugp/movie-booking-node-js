@@ -1,6 +1,5 @@
 const pool = require("../../config/default")
-let connection = pool("default")
-var batch = require("batch")
+let connection = pool(process.env.NODE_ENV)
 var fs = require("fs");
 
 async function processSQLFile(fileName) {
