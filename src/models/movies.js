@@ -1,5 +1,5 @@
 const Boom = require("boom")
-const db = require("./index")
+const db = require("./index").default
 
 class Movie {
     save(req, res, movie) {

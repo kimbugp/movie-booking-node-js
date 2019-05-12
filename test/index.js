@@ -1,5 +1,5 @@
 process.env.NODE_ENV = "test";
-let pool = require(".././config/default")
+import pool from ".././config/default";
 let connection = pool("default")
 
-module.exports = connection
+export default connection
