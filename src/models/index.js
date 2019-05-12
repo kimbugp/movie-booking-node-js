@@ -1,11 +1,11 @@
-const pool = require("../../config/default")
+import pool from "../../config/default";
 let connection = pool(process.env.NODE_ENV)
-var fs = require("fs");
+import { readFileSync } from "fs";
 
 async function processSQLFile(fileName) {
 
     // Extract SQL queries from files. Assumes no ';' in the fileNames
-    var queries = fs.readFileSync(fileName).toString()
+    var queries = readFileSync(fileName).toString()
         .replace(/(\r\n|\n|\r)/gm, " ") // remove newlines
         .replace(/\s+/g, " ") // excess white space
         .split(";") // split into all statements
@@ -20,4 +20,4 @@ async function processSQLFile(fileName) {
 }
 
 processSQLFile("src/models/database.sql")
-module.exports = connection
+export default connection

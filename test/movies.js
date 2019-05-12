@@ -1,11 +1,11 @@
 
 
-let chai = require("chai");
-let chaiHttp = require("chai-http");
-let server = require("../server");
-let should = chai.should();
-let db = require("./index")
-chai.use(chaiHttp);
+import { should as _should, use, request } from "chai";
+import chaiHttp from "chai-http";
+import server from "../server";
+import db from "./index"
+let should = _should();
+use(chaiHttp);
 
 describe("movies", () => {
     beforeEach(() => {
@@ -16,13 +16,13 @@ describe("movies", () => {
     });
     describe("/GET movies", () => {
         it("it should GET all the movies", () => {
-            chai.request(server)
+            request(server)
                 .get("/api/v1/movies")
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a("array");
                 });
-                
+
         });
     });
 
@@ -34,7 +34,7 @@ describe("movies", () => {
                 description: "tt0111161",
                 year: "2019"
             }
-            chai.request(server)
+            request(server)
                 .post("/api/v1/movies")
                 .send(movie)
                 .end((err, res) => {
@@ -42,7 +42,7 @@ describe("movies", () => {
                     res.body.should.be.a("array");
                     res.body.length.should.be.eql(1);
                 });
-            
+
         });
     });
 }

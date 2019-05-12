@@ -1,10 +1,10 @@
-const express = require("express");
-let movies = require("../models/movies");
+import { Router } from "express";
+import { Movie } from "../models/movies";
 
-const myRouter = express.Router()
+const myRouter = Router()
 
 
-class MoviesView extends movies.Movie {
+class MoviesView extends Movie {
     get(req, res) {
         return super.queryAll(res, res)
     }
@@ -23,4 +23,4 @@ myRouter.get("", urls.get)
 myRouter.post("", urls.post)
 myRouter.get("/:id", urls.get_one)
 
-module.exports = myRouter;
+export default myRouter;
